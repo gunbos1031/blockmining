@@ -4,7 +4,7 @@ import styles from './payload.module.css';
 const Payload = () => {
 	return (
 		<section className={styles.section}>
-			<form method="POST" className={styles.form}>
+			<form action="/api/blocks" method="POST" className={styles.form}>
 				<input 
 					className={styles.data}
 					type="text" 

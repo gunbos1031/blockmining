@@ -6,10 +6,6 @@ import (
 	"github.com/gunbos1031/blockmining/utils"
 )
 
-const (
-	defaultDifficulty int = 5
-)
-
 type Block struct {
 	Hash		string	`json:"hash"`
 	PrevHash	string	`json:"prevHash,omitempty"`
@@ -20,13 +16,13 @@ type Block struct {
 	Height		int		`json:"height"`
 }
 
-func createBlock(prevHash, payload string, height int) *Block {
+func createBlock(prevHash, payload string, diff, height int) *Block {
 	block := Block{
 		Hash: "",
 		PrevHash: prevHash,
 		Payload: payload,
 		Nonce: 0,
-		Difficulty: defaultDifficulty,
+		Difficulty: diff,
 		Height: height + 1,
 	}
 	block.mine()

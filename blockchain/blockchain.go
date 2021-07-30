@@ -17,8 +17,8 @@ func Blockchain() *blockchain {
 	return b
 }
 
-func (b *blockchain) AddBlock(payload string) {
-	block := createBlock(getPrevHash(), payload, getHeight())
+func (b *blockchain) AddBlock(payload string, diff int) {
+	block := createBlock(getPrevHash(), payload, diff, getHeight())
 	b.Blocks = append(b.Blocks, block)
 }
 
