@@ -1,7 +1,8 @@
-import React, { useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import styles from './payload.module.css';
 
 const Payload = ({ API, sign }) => {
+	const [loading, setLoading] = useState(false);
 	const blockDataRef = useRef();
 	const blockDiffRef = useRef();
 	const onSubmit = async (event) => {
@@ -12,7 +13,9 @@ const Payload = ({ API, sign }) => {
 			blockData,
 			blockDifficulty,
 		}
+		setLoading(true);
 		await API.post(formData);
+		setLoading(false);
 		sign(true)
 		blockDataRef.current.value = "";
 		blockDiffRef.current.value = "";
@@ -41,7 +44,8 @@ const Payload = ({ API, sign }) => {
 					name="blockDifficulty"
 					required
 				/>
-				<button className={styles.submit}><i className="fas fa-fire"></i></button>
+				{!loading && <button className={styles.submit}><i className="fas fa-fire"></i></button>}
+				{loading && <div className={styles.loading}></div>}
 			</form>
 		</section>
 	)
