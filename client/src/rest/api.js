@@ -21,7 +21,6 @@ class API {
 		};
 		try {
 			const result = await axios.post(URL, formData, config);
-			console.log(result)
 			return result;
 		} catch(err) {
 			console.log(err);
