@@ -10,13 +10,19 @@ import (
 	"github.com/gunbos1031/blockmining/utils"
 )
 
+type blockResponse struct {
+	BlockData string		`json:"blockData"`
+	BlockDifficulty string	`json:"blockDifficulty"`
+}
+
 func post(c *gin.Context) {
-	blockData := c.PostForm("blockData")
-	blockDifficulty := c.PostForm("blockDifficulty")
-	blockDiffAsInt, err := strconv.Atoi(blockDifficulty)
+	var br blockResponse
+	err := c.ShouldBindJSON(&br)
 	utils.HandleErr(err)
-	blockchain.Blockchain().AddBlock(blockData, blockDiffAsInt)
-	c.Redirect(http.StatusFound, "https://blockminingsite-dqqwx.run.goorm.io/")
+	payload := br.BlockData
+	diff, err := strconv.Atoi(br.BlockDifficulty)
+	utils.HandleErr(err)
+	blockchain.Blockchain().AddBlock(payload, diff)
 }
 
 func get(c *gin.Context) {
@@ -36,7 +42,7 @@ func Start() {
 	{
 		api.GET("/", func(c *gin.Context) {
 			c.JSON(http.StatusOK, gin.H{
-				"message": "poing",
+				"message": "pong",
 			})
 		})
 	}

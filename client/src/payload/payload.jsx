@@ -1,11 +1,31 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styles from './payload.module.css';
 
-const Payload = () => {
+const Payload = ({ API }) => {
+	const blockDataRef = useRef();
+	const blockDiffRef = useRef();
+	const onSubmit = (event) => {
+		event.preventDefault();
+		const blockData = blockDataRef.current.value;
+		const blockDifficulty = blockDiffRef.current.value;
+		const formData = {
+			blockData,
+			blockDifficulty,
+		}
+		API.post(formData);
+		blockDataRef.current.value = "";
+		blockDiffRef.current.value = "";
+	}
+	
 	return (
 		<section className={styles.section}>
-			<form action="/api/blocks" method="POST" className={styles.form}>
-				<input 
+			<form 
+				className={styles.form}
+				onSubmit={onSubmit}
+				method="POST"
+			>
+				<input
+					ref={blockDataRef}
 					className={styles.data}
 					type="text" 
 					placeholder="Data for you Block"
@@ -13,6 +33,7 @@ const Payload = () => {
 					required
 				/>
 				<input 
+					ref={blockDiffRef}
 					className={styles.diff}
 					type="text" 
 					placeholder="Difficulty for your Block" 
