@@ -8,28 +8,27 @@ const App = ({ API }) => {
 	const [blocks, setBlocks] = useState([]);
 	const [loading, setLoading] = useState(true);
 	
-	const getBlocks = async () => {
-		if (loading) {
-			const resp = await API.get();
-			if (resp == null) {
-				setLoading(false);
-				return;
-			}
-			const newBlock = resp[resp.length - 1];
-			setBlocks(b => {
-				return [...blocks, newBlock]
-			});
-			setLoading(false);
-		}
-	}
-	
 	const sign = (ok) => {
 		setLoading(ok)
 	}
 	
-	useEffect(() => {
+	useEffect(() => {	
+		const getBlocks = async () => {
+			if (loading) {
+				const resp = await API.get();
+				if (resp == null) {
+					setLoading(false);
+					return;
+				}
+
+				setBlocks(blocks => {
+					return resp;
+				});
+				setLoading(false);
+			}
+		}
 		getBlocks();
-	}, [loading]);
+	}, [loading, API]);
 	
 	return (
 		<div className={styles.container}>
