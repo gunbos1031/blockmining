@@ -1,10 +1,10 @@
 import React, { useRef } from 'react';
 import styles from './payload.module.css';
 
-const Payload = ({ API }) => {
+const Payload = ({ API, sign }) => {
 	const blockDataRef = useRef();
 	const blockDiffRef = useRef();
-	const onSubmit = (event) => {
+	const onSubmit = async (event) => {
 		event.preventDefault();
 		const blockData = blockDataRef.current.value;
 		const blockDifficulty = blockDiffRef.current.value;
@@ -12,7 +12,8 @@ const Payload = ({ API }) => {
 			blockData,
 			blockDifficulty,
 		}
-		API.post(formData);
+		await API.post(formData);
+		sign(true)
 		blockDataRef.current.value = "";
 		blockDiffRef.current.value = "";
 	}

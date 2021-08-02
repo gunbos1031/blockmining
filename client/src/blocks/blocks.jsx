@@ -2,18 +2,16 @@ import React from 'react';
 import styles from './blocks.module.css';
 import Block from '../block/block';
 
-const Blocks = () => {
-  const animals = ["Dog", "Bird", "Cat", "Mouse", "Horse"];
-
+const Blocks = ({ blocks }) => {
   return (
 	<>
 	<div>
 		  <h2>Blocks</h2>
 	</div>
 	<ul className={styles.list}>
-		{animals.map(animal => (
+		{blocks.map(block => (
 			<li>
-				  <Block />
+				  <Block block={block} />
 			</li>
 		))}
 	</ul>

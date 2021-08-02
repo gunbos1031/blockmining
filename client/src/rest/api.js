@@ -5,9 +5,8 @@ const URL = "https://blockminingsite-dqqwx.run.goorm.io/api/blocks";
 class API {
 	get = async () => {
 		try {
-			const json = await axios.get(URL);
-			console.log(json.data);
-			return json.data;
+			const { data } = await axios.get(URL);
+			return data;
 		} catch(err) {
 			console.log(err);
 			throw new Error("Invalid GET request");
